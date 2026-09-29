@@ -16,3 +16,4 @@ C programs that work with singly linked lists of integers.
 - 10-delete_nodeint.c: deletes the node at index of a listint_t list
 - 100-reverse_listint.c: reverses a listint_t list in place
 - 101-print_listint_safe.c: prints a listint_t list, safe against loops
+- 103-find_loop.c: finds the address of the node where a listint_t list's loop starts
