@@ -14,3 +14,4 @@ C programs that work with singly linked lists of integers.
 - 8-sum_listint.c: returns the sum of all the data (n) of a listint_t list
 - 9-insert_nodeint.c: inserts a new node at a given position in a listint_t list
 - 10-delete_nodeint.c: deletes the node at index of a listint_t list
+- 100-reverse_listint.c: reverses a listint_t list in place
