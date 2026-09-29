@@ -11,3 +11,4 @@ C programs that work with singly linked lists of integers.
 - 5-free_listint2.c: frees a listint_t list and sets the head to NULL
 - 6-pop_listint.c: deletes the head node of a listint_t list and returns its data
 - 7-get_nodeint.c: returns the nth node of a listint_t list
+- 8-sum_listint.c: returns the sum of all the data (n) of a listint_t list
