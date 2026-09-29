@@ -1,5 +1,4 @@
 #include "lists.h"
-#include <stdio.h>
 
 /**
  * print_listint_safe - prints a listint_t list, safe against loops
@@ -9,30 +8,34 @@
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	const listint_t *slow, *fast;
-	size_t nodes = 0;
+	const listint_t *tmp, *start;
+	size_t count, i;
 
-	slow = head;
-	fast = head;
+	count = 0;
+	tmp = head;
 
-	while (slow != NULL)
+	while (tmp)
 	{
-		printf("[%p] %d\n", (void *)slow, slow->n);
-		nodes++;
+		printf("[%p] %d\n", (void *)tmp, tmp->n);
+		count++;
+		tmp = tmp->next;
 
-		slow = slow->next;
-
-		if (fast != NULL && fast->next != NULL)
-			fast = fast->next->next;
-		else
-			fast = NULL;
-
-		if (fast != NULL && slow != NULL && fast == slow)
+		start = head;
+		i = 0;
+		while (i < count)
 		{
-			printf("-> [%p] %d\n", (void *)slow, slow->n);
-			return (nodes);
+			if (start != tmp)
+			{
+				start = start->next;
+				i++;
+			}
+			else
+			{
+				printf("-> [%p] %d\n", (void *)start, start->n);
+				return (count);
+			}
 		}
 	}
 
-	return (nodes);
+	return (count);
 }
