@@ -10,3 +10,4 @@ C programs that work with doubly linked lists of integers.
 - 4-free_dlistint.c: frees a dlistint_t list
 - 5-get_dnodeint.c: returns the nth node of a dlistint_t list
 - 6-sum_dlistint.c: returns the sum of all the data (n) of a dlistint_t list
+- 7-insert_dnodeint.c: inserts a new node at a given position in a dlistint_t list
