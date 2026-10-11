@@ -3,100 +3,51 @@
 #include <string.h>
 
 /**
- * f1 - computes index 1
- * @len: length of username
- *
- * Return: index into the alphabet
- */
-int f1(int len)
-{
-	return ((len ^ 0x3b) & 0x3f);
-}
-
-/**
- * f2 - computes index 2
+ * compute_index - computes one of the six key indices
+ * @id: which index to compute (1 to 6)
  * @username: the username
- * @len: length of username
+ * @len: length of the username
  *
  * Return: index into the alphabet
  */
-int f2(char *username, int len)
+int compute_index(int id, char *username, int len)
 {
-	int sum = 0;
-	int i;
+	int i, val, max;
 
-	for (i = 0; i < len; i++)
-		sum += username[i];
-	return ((sum ^ 0x4f) & 0x3f);
-}
-
-/**
- * f3 - computes index 3
- * @username: the username
- * @len: length of username
- *
- * Return: index into the alphabet
- */
-int f3(char *username, int len)
-{
-	int prod = 1;
-	int i;
-
-	for (i = 0; i < len; i++)
-		prod *= username[i];
-	return ((prod ^ 0x55) & 0x3f);
-}
-
-/**
- * f4 - computes index 4
- * @username: the username
- * @len: length of username
- *
- * Return: index into the alphabet
- */
-int f4(char *username, int len)
-{
-	int max = username[0];
-	int i;
-
-	for (i = 0; i < len; i++)
-		if (username[i] > max)
-			max = username[i];
-	srand(max ^ 0xe);
-	return (rand() & 0x3f);
-}
-
-/**
- * f5 - computes index 5
- * @username: the username
- * @len: length of username
- *
- * Return: index into the alphabet
- */
-int f5(char *username, int len)
-{
-	int sum = 0;
-	int i;
-
-	for (i = 0; i < len; i++)
-		sum += username[i] * username[i];
-	return ((sum ^ 0xef) & 0x3f);
-}
-
-/**
- * f6 - computes index 6
- * @c: first character of username
- *
- * Return: index into the alphabet
- */
-int f6(int c)
-{
-	int r = 0;
-	int i;
-
-	for (i = 1; i <= c; i++)
-		r = rand();
-	return ((r ^ 0xe5) & 0x3f);
+	val = 0;
+	if (id == 1)
+		return ((len ^ 0x3b) & 0x3f);
+	if (id == 2)
+	{
+		for (i = 0; i < len; i++)
+			val += username[i];
+		return ((val ^ 0x4f) & 0x3f);
+	}
+	if (id == 3)
+	{
+		val = 1;
+		for (i = 0; i < len; i++)
+			val *= username[i];
+		return ((val ^ 0x55) & 0x3f);
+	}
+	if (id == 4)
+	{
+		max = username[0];
+		for (i = 0; i < len; i++)
+			if (username[i] > max)
+				max = username[i];
+		srand(max ^ 0xe);
+		return (rand() & 0x3f);
+	}
+	if (id == 5)
+	{
+		for (i = 0; i < len; i++)
+			val += username[i] * username[i];
+		return ((val ^ 0xef) & 0x3f);
+	}
+	for (i = 1; i <= username[0]; i++)
+		val = rand();
+	return ((val ^ 0xe5) & 0x3f);
 }
 
 /**
@@ -111,7 +62,7 @@ int main(int argc, char **argv)
 	char alphabet[65] =
 		"A-CHRDw87lNS0E9B2TibgpnMVys5XzvtOGJcYLU+4mjW6fxqZeF3Qa1rPhdKIouk";
 	char key[7];
-	int len;
+	int len, i;
 
 	if (argc != 2)
 	{
@@ -119,12 +70,8 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	len = strlen(argv[1]);
-	key[0] = alphabet[f1(len)];
-	key[1] = alphabet[f2(argv[1], len)];
-	key[2] = alphabet[f3(argv[1], len)];
-	key[3] = alphabet[f4(argv[1], len)];
-	key[4] = alphabet[f5(argv[1], len)];
-	key[5] = alphabet[f6(argv[1][0])];
+	for (i = 1; i <= 6; i++)
+		key[i - 1] = alphabet[compute_index(i, argv[1], len)];
 	key[6] = '\0';
 	printf("%s\n", key);
 	return (0);
